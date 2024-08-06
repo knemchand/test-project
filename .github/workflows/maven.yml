@@ -1,46 +1,35 @@
-name: Maven CI/CD
+name: Java CI with Maven
 
 on:
- push:
-    branches: [ main ]
- pull_request:
-    branches: [ main ]
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build_and_test:
-
+  build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up JDK 17
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v4
       with:
-        java-version: 17
-
-    - name: Build project with Maven
-      run: mvn -B package --file pom.xml
-
-    - name: Cache the Maven packages to speed up build
-      uses: actions/cache@v1
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2      
-
-    - name: Build and test project with Maven
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
       run: mvn -B package --file pom.xml
 
   publish-job:
         runs-on: ubuntu-latest
-        needs: [build_and_test]
+        needs: [build]
         steps:
           - uses: actions/checkout@v2
           - uses: actions/setup-java@v1
             with:
               java-version: 17
           - run: mvn -B package --file pom.xml -DskipTests
-          - run: mkdir staging && cp target/*jar-with-dependencies.jar staging
+          - run: mkdir staging && cp target/*.was staging
           - uses: actions/upload-artifact@v1
             with:
               name: Package
