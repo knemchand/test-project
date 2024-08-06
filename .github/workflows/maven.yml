@@ -28,12 +28,11 @@ jobs:
           - uses: actions/setup-java@v1
             with:
               java-version: 17
-          #- run: mvn -B package --file pom.xml -DskipTests
-          - run: |
-                pwd
-                mkdir staging
-                ls -la
-                ls -la ./target
+          - run: mvn -B package --file pom.xml -DskipTests
+          - run: pwd
+          - run: mkdir staging
+          - run: ls -la
+          #- run: ls -la ./target
           #- run: mkdir staging | cp target/*.was staging
           - uses: actions/upload-artifact@v1
             with:
