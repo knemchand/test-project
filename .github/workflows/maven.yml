@@ -28,10 +28,13 @@ jobs:
           - uses: actions/setup-java@v1
             with:
               java-version: 17
-          - run: mvn -B package --file pom.xml -DskipTests
+          #- run: mvn -B package --file pom.xml -DskipTests
           - run: |
+                pwd
+                mkdir staging
                 ls -la
-          - run: mkdir staging && cp target/*.was staging
+                ls -la ./target
+          #- run: mkdir staging | cp target/*.was staging
           - uses: actions/upload-artifact@v1
             with:
               name: Package
