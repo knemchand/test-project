@@ -29,6 +29,8 @@ jobs:
             with:
               java-version: 17
           - run: mvn -B package --file pom.xml -DskipTests
+          - run: |
+                ls -la
           - run: mkdir staging && cp target/*.was staging
           - uses: actions/upload-artifact@v1
             with:
