@@ -22,7 +22,7 @@ jobs:
     - run: mkdir staging
     - run: ls -la
     - run: ls -la ./target
-    - run: cp target/*.was staging
+    - run: cp target/*.war staging
     - uses: actions/upload-artifact@v1
       with:
         name: Package
