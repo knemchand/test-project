@@ -28,6 +28,14 @@ jobs:
         connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
         name: my-artifact
         path: staging
+    - name: Slack Notification
+      uses: act10ns/slack@v2.1.0
+      with:
+        status: ${{ job.status }}
+        steps: $ {{ tJson(steps) }}
+        channel: '#github-actions'
+      if: alwayr()
+    
     #- uses: actions/upload-artifact@v1
     #  with:
     #    name: Package
