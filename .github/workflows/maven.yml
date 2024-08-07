@@ -34,7 +34,7 @@ jobs:
         status: ${{ job.status }}
         steps: $ {{ tJson(steps) }}
         channel: '#github-actions'
-      if: alwayr()
+      if: always()
     
     #- uses: actions/upload-artifact@v1
     #  with:
