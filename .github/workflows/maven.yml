@@ -23,7 +23,12 @@ jobs:
     - run: ls -la
     - run: ls -la ./target
     - run: cp target/*.war staging
-    - uses: actions/upload-artifact@v1
+    - uses: fixpoint/azblob-upload-artifact@v4
       with:
-        name: Package
+        connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+        name: my-artifact
         path: staging
+    #- uses: actions/upload-artifact@v1
+    #  with:
+    #    name: Package
+    #    path: staging
