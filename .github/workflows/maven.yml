@@ -24,6 +24,8 @@ jobs:
           mvn -B package --file pom.xml
           mkdir staging
           cp target/*.war staging
+    - name: Test with Maven
+      run: mvn -B test --file pom.xml
     - uses: fixpoint/azblob-upload-artifact@v4
       with:
         connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
