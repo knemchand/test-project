@@ -19,24 +19,16 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - run: mvn -B package --file pom.xml
-    - run: pwd
-    - run: mkdir staging
-    - run: ls -la
-    - run: ls -la ./target
-    - run: cp target/*.war staging
+    - name: Build/Pacakge with Maven
+      run: |
+          mvn -B package --file pom.xml
+          mkdir staging
+          cp target/*.war staging
     - uses: fixpoint/azblob-upload-artifact@v4
       with:
         connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
         name: my-artifact
-        path: staging
-    - name: Slack Notification
-      uses: act10ns/slack@v2.1.0
-      with:
-        status: ${{ job.status }}
-        steps: ${{ toJson(steps) }}
-        channel: '#github-actions'
-      if: always()
+        path: staging    
     
     #- uses: actions/upload-artifact@v1
     #  with:
